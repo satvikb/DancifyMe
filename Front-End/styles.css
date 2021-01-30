@@ -1,14 +1,29 @@
+/* .videoParent {
+  overflow: hidden;
+}
+
 #video
 {
-    position: absolute;
-    height: 120%;
-    width: 120%;
-    margin-left: -10vw;
-    margin-top: -10vw;
+  height: 100%;
+  width: 177.77777778vh;
+  min-width: 100%;
+  min-height: 56.25vw;
+} */
+
+.videoParent {
+  overflow: relative;
+}
+
+video
+{
+  position: absolute;
+  left: 50%; /* % of surrounding element */
+  top: 50%;
+  transform: translate(-50%, -50%); /* % of current element */
 }
 
 /* body{
-    
+
 } */
 
 html,body
@@ -17,17 +32,25 @@ html,body
     height: 100%;
     margin: 0px;
     padding: 0px;
-    overflow-x: hidden; 
+    overflow-x: hidden;
     overflow: hidden;
 }
 
 #word{
     font-family: "neontubes";
-    position: relative;
+    position: absolute;
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+    /* left:50%; */
+    /* top:50%; */
     font-size: 100px;
-    margin-left: 33vw;
-    top: -15vh;
+    /* transform: translate(-50%, -50%) */
+    /* margin-left: 33vw; */
+    top: -10vh;
     color: #d4eaff;
+    text-align: center;
     text-shadow: 0 0 0 transparent, 0 0 10px #ff003c, 0 0 20px rgba(255, 0, 60, 0.5), 0 0 40px #ff003c, 0 0 100px #ff003c, 0 0 200px #ff003c, 0 0 300px #ff003c, 0 0 500px #ff003c, 0 0 1000px #ff003c;
     -webkit-animation: blink 4s infinite alternate;
           animation: blink 4s infinite alternate;
@@ -35,148 +58,248 @@ html,body
 
 
 @font-face {
-    font-family: 'neontubes';
-    src: url("https://bitbucket.org/kennethjensen/webfonts/raw/fc13c1cb430a0e9462da56fe3f421ff7af72db71/neontubes/neontubes-webfont.eot");
-    src: url("https://bitbucket.org/kennethjensen/webfonts/raw/fc13c1cb430a0e9462da56fe3f421ff7af72db71/neontubes/neontubes-webfont.eot?#iefix") format("embedded-opentype"), url("https://bitbucket.org/kennethjensen/webfonts/raw/fc13c1cb430a0e9462da56fe3f421ff7af72db71/neontubes/neontubes-webfont.woff2") format("woff2"), url("https://bitbucket.org/kennethjensen/webfonts/raw/fc13c1cb430a0e9462da56fe3f421ff7af72db71/neontubes/neontubes-webfont.woff") format("woff"), url("https://bitbucket.org/kennethjensen/webfonts/raw/fc13c1cb430a0e9462da56fe3f421ff7af72db71/neontubes/neontubes-webfont.ttf") format("truetype");
-    font-weight: normal;
-    font-style: normal;
-  }
+  font-family: 'neontubes';
+  src: url("https://bitbucket.org/kennethjensen/webfonts/raw/fc13c1cb430a0e9462da56fe3f421ff7af72db71/neontubes/neontubes-webfont.eot");
+  src: url("https://bitbucket.org/kennethjensen/webfonts/raw/fc13c1cb430a0e9462da56fe3f421ff7af72db71/neontubes/neontubes-webfont.eot?#iefix") format("embedded-opentype"), url("https://bitbucket.org/kennethjensen/webfonts/raw/fc13c1cb430a0e9462da56fe3f421ff7af72db71/neontubes/neontubes-webfont.woff2") format("woff2"), url("https://bitbucket.org/kennethjensen/webfonts/raw/fc13c1cb430a0e9462da56fe3f421ff7af72db71/neontubes/neontubes-webfont.woff") format("woff"), url("https://bitbucket.org/kennethjensen/webfonts/raw/fc13c1cb430a0e9462da56fe3f421ff7af72db71/neontubes/neontubes-webfont.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
 
-  @-webkit-keyframes buzz {
-    70% {
-      opacity: 0.80;
-    }
+@-webkit-keyframes buzz {
+  70% {
+    opacity: 0.80;
   }
-   
-  @keyframes buzz {
-    70% {
-      opacity: 0.80;
-    }
-  }
-  @-webkit-keyframes blink {
-    40% {
-      opacity: 1;
-    }
-    42% {
-      opacity: 0.8;
-    }
-    43% {
-      opacity: 1;
-    }
-    45% {
-      opacity: 0.2;
-    }
-    46% {
-      opacity: 1;
-    }
-  }
-  @keyframes blink {
-    40% {
-      opacity: 1;
-    }
-    42% {
-      opacity: 0.8;
-    }
-    43% {
-      opacity: 1;
-    }
-    45% {
-      opacity: 0.2;
-    }
-    46% {
-      opacity: 1;
-    }
-  }
+}
 
-  main {
-    /* width: 100%;
-    height: 100%; */
-    margin: 0;
-    padding: 0;
+@keyframes buzz {
+  70% {
+    opacity: 0.80;
   }
-
-  #carousel {
-    position: relative;
-    height: 400px;
-    /* left: 10%; */
-    top: 50%;
-    transform: translateY(70%);
-    overflow: hidden;
-  }
-  #carousel div {
-    position: absolute;
-    transition: transform 1s, left 1s, opacity 1s, z-index 0s;
+}
+@-webkit-keyframes blink {
+  40% {
     opacity: 1;
   }
-  #carousel div img {
-    width: 400px;
-    transition: width 1s;
+  42% {
+    opacity: 0.8;
   }
-  #carousel div.hideLeft {
-    left: 0%;
-    opacity: 0;
-    transform: translateY(50%) translateX(-50%);
+  43% {
+    opacity: 1;
   }
-  #carousel div.hideLeft img {
-    width: 200px;
+  45% {
+    opacity: 0.2;
   }
-  #carousel div.hideRight {
-    left: 100%;
-    opacity: 0;
-    transform: translateY(50%) translateX(-50%);
+  46% {
+    opacity: 1;
   }
-  #carousel div.hideRight img {
-    width: 200px;
+}
+@keyframes blink {
+  40% {
+    opacity: 1;
   }
-  #carousel div.prev {
-    z-index: 5;
-    left: 30%;
-    transform: translateY(50px) translateX(-50%);
+  42% {
+    opacity: 0.8;
   }
-  #carousel div.prev img {
-    width: 300px;
+  43% {
+    opacity: 1;
   }
-  #carousel div.prevLeftSecond {
-    z-index: 4;
-    left: 15%;
-    transform: translateY(50%) translateX(-50%);
-    opacity: 0.7;
+  45% {
+    opacity: 0.2;
   }
-  #carousel div.prevLeftSecond img {
-    width: 200px;
+  46% {
+    opacity: 1;
   }
-  #carousel div.selected {
-    z-index: 10;
-    left: 50%;
-    transform: translateY(0px) translateX(-50%);
-  }
-  #carousel div.next {
-    z-index: 5;
-    left: 70%;
-    transform: translateY(50px) translateX(-50%);
-  }
-  #carousel div.next img {
-    width: 300px;
-  }
-  #carousel div.nextRightSecond {
-    z-index: 4;
-    left: 85%;
-    transform: translateY(50%) translateX(-50%);
-    opacity: 0.7;
-  }
-  #carousel div.nextRightSecond img {
-    width: 200px;
-  }
+}
 
-  /* .Dance1{
-    height: auto;
-    width: 50%;
-  } */
-  
-  .buttons {
-    position: fixed;
-    left: 50%;
-    transform: translateX(-50%);
-    bottom: 10px;
-  }
+main {
+  /* width: 100%;
+  height: 100%; */
+  margin: 0;
+  padding: 0;
+}
 
+#carousel {
+  position: relative;
+  height: 400px;
+  /* left: 10%; */
+  /* top: 50%; */
+  transform: translateY(125%);
+  overflow: hidden;
+}
+#carousel div p{
+  /* position: absolute;
+  top:10%;
+  left: 50%; */
+  /* transition: transform 1s, left 1s, opacity 1s, z-index 0s;
+  opacity: 1; */
+}
+#carousel div {
+  position: absolute;
+  transition: transform 1s, left 1s, opacity 1s, z-index 0s;
+  opacity: 1;
+}
+#carousel div img {
+  width: 400px;
+  transition: width 1s;
+}
+
+#carousel div video {
+  /* width: 400px; */
+  top:35%;
+  transition: width 1s;
+}
+
+.danceName{
+    /* top: 3%; */
+    transform: translateY(-50%);
+    text-align: center;
+}
+
+.learnBtn {
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 10px;
+}
+
+.selectedContainer {
+  z-index: 10;
+  left: 50%;
+  transform: translateY(0px) translateX(-50%);
+  width: 400px;
+  height: 400px;
+  /* transform: translateX(-50%); */
+  background-color: lightblue;
+  overflow: hidden;
+}
+
+.nextContainer {
+  z-index: 5;
+  left: 70%;
+  transform: translateY(50px) translateX(-50%);
+  width: 300px;
+  height: 300px;
+  /* transform: translateX(-50%); */
+  background-color: lightblue;
+}
+
+.prevContainer {
+  z-index: 5;
+  left: 30%;
+  transform: translateY(50px) translateX(-50%);
+  width: 300px;
+  height: 300px;
+  /* transform: translateX(-50%); */
+  background-color: lightblue;
+}
+
+.prevLeftSecondContainer {
+  z-index: 4;
+  left: 15%;
+  transform: translateY(50%) translateX(-50%);
+  opacity: 0.7;
+  width: 200px;
+  height: 200px;
+  /* transform: translateX(-50%); */
+  background-color: lightblue;
+}
+
+.nextRightSecondContainer {
+  z-index: 4;
+  left: 85%;
+  transform: translateY(50%) translateX(-50%);
+  opacity: 0.7;
+  width: 200px;
+  height: 200px;
+  /* transform: translateX(-50%); */
+  background-color: lightblue;
+}
+
+.hideRightContainer {
+  left: 100%;
+  opacity: 0;
+  transform: translateY(50%) translateX(-50%);
+}
+
+.hideLeftContainer {
+  left: 0%;
+  opacity: 0;
+  transform: translateY(50%) translateX(-50%);
+}
+
+#carousel div.hideLeft {
+  left: 0%;
+  opacity: 0;
+  transform: translateY(50%) translateX(-50%);
+}
+#carousel div.hideLeft img {
+  width: 200px;
+}
+#carousel div.hideRight {
+  left: 100%;
+  opacity: 0;
+  transform: translateY(50%) translateX(-50%);
+}
+#carousel div.hideRight img {
+  width: 200px;
+}
+#carousel div.prev {
+  z-index: 5;
+  left: 30%;
+  transform: translateY(50px) translateX(-50%);
+}
+#carousel div.prev img {
+  width: 300px;
+}
+#carousel div.prevLeftSecond {
+  z-index: 4;
+  left: 15%;
+  transform: translateY(50%) translateX(-50%);
+  opacity: 0.7;
+}
+#carousel div.prevLeftSecond img {
+  width: 200px;
+}
+#carousel div.selected {
+  z-index: 10;
+  left: 50%;
+  transform: translateY(0px) translateX(-50%);
+}
+#carousel div.next {
+  z-index: 5;
+  left: 70%;
+  transform: translateY(50px) translateX(-50%);
+}
+#carousel div.next img {
+  width: 300px;
+}
+#carousel div.nextRightSecond {
+  z-index: 4;
+  left: 85%;
+  transform: translateY(50%) translateX(-50%);
+  opacity: 0.7;
+}
+#carousel div.nextRightSecond img {
+  width: 200px;
+}
+
+#carousel video {
+  overflow: hidden;
+  width: 100%;
+}
+
+/* .videoContainer {
+  width: 500px
+  overflow: hidden;
+} */
+/* .Dance1{
+  height: auto;
+  width: 50%;
+} */
+
+.buttons {
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 10px;
+}
