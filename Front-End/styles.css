@@ -36,7 +36,7 @@ html,body
     overflow: hidden;
 }
 
-#word{
+.socod{
     font-family: "neontubes";
     position: absolute;
     margin-left: auto;
@@ -145,14 +145,16 @@ main {
 
 #carousel div video {
   /* width: 400px; */
-  top:35%;
+  top:45%;
   transition: width 1s;
 }
 
-.danceName{
+#danceName{
     /* top: 3%; */
-    transform: translateY(-50%);
+    transform: translateY(320%);
+    font-size: 20px;
     text-align: center;
+    color: white;
 }
 
 .learnBtn {
@@ -169,7 +171,7 @@ main {
   width: 400px;
   height: 400px;
   /* transform: translateX(-50%); */
-  background-color: lightblue;
+  /* background-color: lightblue; */
   overflow: hidden;
 }
 
@@ -180,7 +182,7 @@ main {
   width: 300px;
   height: 300px;
   /* transform: translateX(-50%); */
-  background-color: lightblue;
+  /* background-color: lightblue; */
 }
 
 .prevContainer {
@@ -190,7 +192,7 @@ main {
   width: 300px;
   height: 300px;
   /* transform: translateX(-50%); */
-  background-color: lightblue;
+  /* background-color: lightblue; */
 }
 
 .prevLeftSecondContainer {
@@ -201,7 +203,7 @@ main {
   width: 200px;
   height: 200px;
   /* transform: translateX(-50%); */
-  background-color: lightblue;
+  /* background-color: lightblue; */
 }
 
 .nextRightSecondContainer {
@@ -212,7 +214,7 @@ main {
   width: 200px;
   height: 200px;
   /* transform: translateX(-50%); */
-  background-color: lightblue;
+  /* background-color: lightblue; */
 }
 
 .hideRightContainer {
