@@ -1,14 +1,24 @@
 #video
 {
-    position:absolute;
+    position: absolute;
     height: 120%;
     width: 120%;
     margin-left: -10vw;
     margin-top: -10vw;
 }
 
-body{
-    overflow:hidden;
+/* body{
+    
+} */
+
+html,body
+{
+    width: 100%;
+    height: 100%;
+    margin: 0px;
+    padding: 0px;
+    overflow-x: hidden; 
+    overflow: hidden;
 }
 
 #word{
@@ -79,8 +89,8 @@ body{
   }
 
   main {
-    width: 100%;
-    height: 100%;
+    /* width: 100%;
+    height: 100%; */
     margin: 0;
     padding: 0;
   }
@@ -88,8 +98,9 @@ body{
   #carousel {
     position: relative;
     height: 400px;
+    /* left: 10%; */
     top: 50%;
-    transform: translateY(50%);
+    transform: translateY(70%);
     overflow: hidden;
   }
   #carousel div {
