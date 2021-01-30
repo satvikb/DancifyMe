@@ -20,17 +20,18 @@
 
         <div id="carousel">
 
-           <div class="hideLeft">
+           <!-- <div class="hideLeft">
              <div class="hideLeftContainer">
                <video class="Dance1" autoplay muted>
                    <source src="Dance1.mp4" type="video/mp4">
                </video>
              </div>
-          </div>
+          </div> -->
 
           <div class="prevLeftSecond">
             <div class="prevLeftSecondContainer">
-              <video class="Dance1" autoplay muted loop>
+              <p id="danceName" class="socodg">Renegade</p>
+              <video name="video_file1" class="Dance1" autoplay muted loop>
                   <source src="Dance1.mp4" type="video/mp4">
               </video>
             </div>
@@ -38,12 +39,11 @@
 
           <div class="prev">
             <div class="prevContainer">
-              <p id="danceName" class="socod">Dance Name</p>
-
-              <video class="Dance1" autoplay muted loop>
+              <p id="danceName" class="socod">Say So</p>
+              <video name="video_file2" class="Dance1" autoplay muted loop>
                   <source src="Dance1.mp4" type="video/mp4">
               </video>
-              <button class="learnBtn">Learn This</button>
+              <!-- <button class="learnBtn">Learn This</button> -->
 
             </div>
           </div>
@@ -51,19 +51,24 @@
           <div class="selected">
             <!-- <img src="https://i1.sndcdn.com/artworks-000062423439-lf7ll2-t500x500.jpg"> -->
             <div class="selectedContainer">
-              <p id="danceName" class="socod">Dance Name</p>
-              <video class="Dance1" autoplay muted loop>
+              <form action="https://upload.embed.ly/1/video?key=YOUR_API_KEY" method="POST" enctype="multipart/form-data" name="upload_form">
+                <p id="danceName" class="socodb">Cannibal</p>
+                <video name="video_file3" class="Dance1" autoplay muted loop>
                   <source src="Dance1.mp4" type="video/mp4">
-              </video>
-              <button class="learnBtn">Learn This</button>
-
+                </video>
+                <div id="upload-input" hidden style="position: absolute;">
+                  <input id="video_file1" name="video_file" type="file">
+                </div>
+              </form>
+              <!-- <button class="learnBtn">Learn This</button> -->
             </div>
 
           </div>
 
           <div class="next">
             <div class="nextContainer">
-              <video class="Dance1" autoplay muted loop>
+              <p id="danceName" class="socod">The Box</p>
+              <video name="video_file4" class="Dance1" autoplay muted loop>
                   <source src="Dance1.mp4" type="video/mp4">
               </video>
             </div>
@@ -71,26 +76,27 @@
 
           <div class="nextRightSecond">
             <div class="nextRightSecondContainer">
-              <video class="Dance1" autoplay muted loop>
+              <p id="danceName" class="socodg">Savage</p>
+              <video name="video_file5" class="Dance1" autoplay muted loop>
                   <source src="Dance1.mp4" type="video/mp4">
               </video>
             </div>
           </div>
 
-          <div class="hideRight">
+          <!-- <div class="hideRight">
             <div class="hideRightContainer">
               <video class="Dance1" autoplay muted loop>
                   <source src="Dance1.mp4" type="video/mp4">
               </video>
             </div>
-          </div>
+          </div> -->
 
         </div>
 
-        <div class="buttons">
+        <!-- <div class="buttons">
           <button id="prevBtn">Prev</button>
           <button id="nextBtn">Next</button>
-        </div>
+        </div> -->
 
       </main>
 

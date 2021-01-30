@@ -72,15 +72,19 @@ for(var i = 0, max = all.length; i < max; i++)
 {
   var videoNode = all[i]
   if (videoNode) {
+    var videoName = videoNode.getAttribute("name");
+    console.log("Video Clicked" + videoName);
     videoNode.addEventListener('click', function(event){
       event.preventDefault();
+      $('#' + videoName).click();
+      console.log("Video Clicked" + videoName);
     });
   }
 }
 
 // TODO determine which dance to learn or hide all the learn buttons except
 // for the currently selected video
-$(".learnBtn").click(function () {
-  // show a new window
+// $(".learnBtn").click(function () {
+//   // show a new window
   
-});
+// });

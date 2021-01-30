@@ -52,8 +52,48 @@ html,body
     color: #d4eaff;
     text-align: center;
     text-shadow: 0 0 0 transparent, 0 0 10px #ff003c, 0 0 20px rgba(255, 0, 60, 0.5), 0 0 40px #ff003c, 0 0 100px #ff003c, 0 0 200px #ff003c, 0 0 300px #ff003c, 0 0 500px #ff003c, 0 0 1000px #ff003c;
-    -webkit-animation: blink 4s infinite alternate;
-          animation: blink 4s infinite alternate;
+  -webkit-animation: blink 4s infinite alternate;
+        animation: blink 4s infinite alternate;
+}
+
+.socodg{
+  font-family: "neontubes";
+  position: absolute;
+  margin-left: auto;
+  margin-right: auto;
+  left: 0;
+  right: 0;
+  /* left:50%; */
+  /* top:50%; */
+  font-size: 75px;
+  /* transform: translate(-50%, -50%) */
+  /* margin-left: 33vw; */
+  top: -10vh;
+  color: #d4eaff;
+  text-align: center;
+  text-shadow: 0 0 0 transparent, 0 0 10px #22d82b, 0 0 20px rgba(25, 223, 51, 0.5), 0 0 40px rgb(30, 221, 30), 0 0 100px #1edb37, 0 0 200px rgb(39, 161, 15), 0 0 300px #31b125, 0 0 500px rgb(10, 139, 38), 0 0 1000px #1faf1a;
+-webkit-animation: blink 4s infinite alternate;
+      animation: blink 4s infinite alternate;
+}
+
+.socodb{
+  font-family: "neontubes";
+  position: absolute;
+  margin-left: auto;
+  margin-right: auto;
+  left: 0;
+  right: 0;
+  /* left:50%; */
+  /* top:50%; */
+  font-size: 200px;
+  /* transform: translate(-50%, -50%) */
+  /* margin-left: 33vw; */
+  top: -10vh;
+  color: #d4eaff;
+  text-align: center;
+  text-shadow: 0 0 0 transparent, 0 0 10px #11c1f7, 0 0 20px rgba(21, 207, 240, 0.5), 0 0 40px rgb(15, 243, 224), 0 0 100px #10e7f7, 0 0 200px rgb(39, 201, 230), 0 0 300px #2590b1, 0 0 500px rgb(10, 139, 38), 0 0 1000px #1faf1a;
+-webkit-animation: blink 4s infinite alternate;
+      animation: blink 4s infinite alternate;
 }
 
 
@@ -151,7 +191,7 @@ main {
 
 #danceName{
     /* top: 3%; */
-    transform: translateY(320%);
+    transform: translateY(227%);
     font-size: 20px;
     text-align: center;
     color: white;
@@ -160,7 +200,7 @@ main {
 .learnBtn {
   position: fixed;
   left: 50%;
-  transform: translateX(-50%);
+  transform: translateX(-40%);
   bottom: 10px;
 }
 
@@ -178,7 +218,7 @@ main {
 .nextContainer {
   z-index: 5;
   left: 70%;
-  transform: translateY(50px) translateX(-50%);
+  transform: translateY(0%) translateX(-50%);
   width: 300px;
   height: 300px;
   /* transform: translateX(-50%); */
@@ -188,7 +228,7 @@ main {
 .prevContainer {
   z-index: 5;
   left: 30%;
-  transform: translateY(50px) translateX(-50%);
+  transform: translateY(0%) translateX(-50%);
   width: 300px;
   height: 300px;
   /* transform: translateX(-50%); */
