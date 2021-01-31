@@ -199,7 +199,7 @@ module.exports = {
         const FIRST_FRAME_CONSIDERED_THRESHOLD = 0.50; // 50% of the body parts in the uploaded dance frame has to match with the first frame of the tutorial dance.
 
         // the most important threshold
-        const BODY_PART_DISTANCE_CLOSE_THRESHOLD = 0.3; // 0.175 // the body parts have to be within 5% of each other
+        const BODY_PART_DISTANCE_CLOSE_THRESHOLD = 0.15; // 0.175 // the body parts have to be within 5% of each other
 
 
         function compareTwoNormalizedFrames(frame1, frame2){

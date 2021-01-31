@@ -239,7 +239,7 @@ function updateModalDataWithResults(results){
     var mins = pad(Math.floor(s/60), 2);
     var secs = pad((s % 60).toFixed(1), 4);
 
-    var timeString = mins+":"+secs
+    var timeString = mins+":"+secs+"s"
     finalString = timeString + " - "+pString
     incorrectTotalString += finalString+"\n"
   }

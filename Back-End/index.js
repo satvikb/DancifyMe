@@ -95,15 +95,6 @@ app.post("/handleDanceComparison", (req, res) => {
 // });
 
 
-
-
-
-// dance_handler.compareTwoNormalizedDances(resolve("processedDances/TheBox/TheBox.json"), resolve("processedDances/334321/334321.json"))
-// dance_handler.compareTwoNormalizedDances(resolve("processedDances/TUTORIAL_HANDS/TUTORIAL_HANDS.json"), resolve("processedDances/edison/edison.json"))
-// dance_handler.compareTwoNormalizedDances(resolve("processedDances/TUTORIAL_HANDS/TUTORIAL_HANDS.json"), resolve("processedDances/arnav/arnav.json"))
-// dance_handler.compareTwoNormalizedDances(resolve("processedDances/TUTORIAL_HANDS/TUTORIAL_HANDS.json"), resolve("processedDances/arnav2/arnav2.json"))
-// dance_handler.compareTwoNormalizedDances(resolve("processedDances/TUTORIAL_HANDS/TUTORIAL_HANDS.json"), resolve("processedDances/gabe/gabe.json"))
-
 // Init server.
 app.listen(3000, function () {
   console.log("Example app listening on port 3000!");
