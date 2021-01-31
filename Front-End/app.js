@@ -80,6 +80,15 @@ for(var i = 0, max = all.length; i < max; i++)
 
 $("#video_file1").change(function(e) {
 
+  // $("form[name='upload_form']").submit();
+  var modal = document.getElementById("myModal");
+  modal.style.display = "block";
+  var span = document.getElementsByClassName("close")[0];
+  span.onclick = function() {
+    modal.style.display = "none";
+  }
+  // When the user clicks anywhere outside of the modal, close it
+
   console.log("SUBMIT FORM DATA")
 
   var form = new FormData($("form[name='upload_form']")[0]);  
