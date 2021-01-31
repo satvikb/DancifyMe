@@ -408,17 +408,18 @@ top: 0;
 width: 100%; /* Full width */
 height: 100%; /* Full height */
 overflow: auto; /* Enable scroll if needed */
-background-color: rgb(0,0,0); /* Fallback color */
-background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-opacity: 0.75;
+/* background-color: rgb(0,0,0); Fallback color */
+background: rgba(0,0,0,0.4); /* Black w/ opacity */
+/* opacity: 0.75; */
 }
 
 /* Modal Content */
 .modal-content {
-  background-color: #000000;
+  background: rgba(0,0,0,0.4);
   margin: auto;
   border: 1px solid #888;
   width: 80%;
+  padding-bottom: 0;
   /* padding-top: 100px; */
 }
 
@@ -439,30 +440,32 @@ opacity: 0.75;
 
 .Data-Stats{
   padding: 2px 16px;
-  background-color: rgb(0, 0, 0);
+  background: rgba(0,0,0,0.4);
   color: white;
+  margin-bottom: 0;
 }
 
 .Data-Grade{
   transform: translateY(-30px);
-  background-color: rgb(0, 0, 0);
+  background: rgba(0,0,0,0.4);
   color: white;
 }
 
 .Data-Weakness{
-  transform: translateY(-50px);
-  background-color: rgb(0, 0, 0);
+  /* transform: translateY(-80px); */
+  /* background: rgba(0,0,0,0.4); */
   color: white;
+  margin-bottom: 0;
 }
 
 /* Modal Content */
 .modal-content {
   position: relative;
-  background-color: black;
+  background: rgba(0,0,0,0.4);
   margin: auto;
   border: 1px solid #888;
   width: 80%;
-  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+  /* box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19); */
   animation-name: animatetop;
   animation-duration: 0.4s
 }
@@ -473,15 +476,59 @@ opacity: 0.75;
   to {top: 0; opacity: 1}
 }
 
-h2{
+.modalPercent{
+  position: relative;
   text-decoration: underline;  
   font-family: "neontubes";
-  font-size: 25px;
+  font-size: 100px;
   color: #d4eaff;
   text-align: center;
+  vertical-align: text-top;
+  /* transform: translateY(-100px); */
+  /* background: yellow; */
+  padding: -2px 16px;
+
+  margin-bottom: 0;
+  margin-top: 16px;
+  text-shadow: 0 0 0 transparent, 0 0 10px #63faff, 0 0 20px rgba(100, 255, 255, 1), 0 0 40px #63faff, 0 0 100px #63faff, 0 0 200px #63faff, 0 0 300px #63faff, 0 0 500px #63faff, 0 0 1000px #63faff;
+  -webkit-animation: blink 7s infinite alternate;
+        animation: blink 7s infinite alternate;
+}
+
+.modalHeader{
+  position: relative;
+  margin-top: 0;
+
+  /* text-decoration: underline;   */
+  font-family: "neontubes";
+  font-size: 50px;
+  color: #d4eaff;
+  text-align: left;
+  /* transform: translateY(-50px); */
+  margin-bottom: 20px;
+  margin-left: 20px;
+  /* background: yellow; */
   text-shadow: 0 0 0 transparent, 0 0 10px #ff003c, 0 0 20px rgba(255, 0, 60, 0.5), 0 0 40px #ff003c, 0 0 100px #ff003c, 0 0 200px #ff003c, 0 0 300px #ff003c, 0 0 500px #ff003c, 0 0 1000px #ff003c;
   -webkit-animation: blink 4s infinite alternate;
         animation: blink 4s infinite alternate;
+        
+}
+
+.weaknessText {
+  margin: 0;
+  margin-left: 20px;
+  width: 100%; max-width: 100%;
+  height: 200px;
+  background: transparent;
+  color: white;
+  resize: none;
+  border: 0 none;
+  outline: none;
+}
+
+.weaknessText::-webkit-scrollbar {
+  display: none;
+}
 
 @keyframes initAnim{
   0%   { top:100vh; }

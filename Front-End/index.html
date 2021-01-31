@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <title>OpenPose</title>
+    <title>Dancify</title>
 </head>
 <body>
   <div class="videoParent">
@@ -25,48 +25,72 @@
     <div id="carousel">
       <div class="prevLeftSecond">
         <div class="prevLeftSecondContainer">
-          <p>Renegade</p>
-          <video name="video_file1" class="Dance1" autoplay muted loop>
-              <source src="Renegade.mp4" type="video/mp4">
-          </video>
+          <form action="" method="POST" enctype="multipart/form-data" name="video_file1_upload">
+            <p>Renegade</p>
+            <video name="video_file1" class="Dance1" autoplay muted loop>
+                <source src="Renegade.mp4" type="video/mp4">
+            </video>
+            <div id="upload-input" hidden style="position: absolute;">
+              <input type="text" name="tutorialDanceId" value="Renegade"/>
+              <input id="video_file1" name="videofile" type="file">
+            </div>
+          </form>
         </div>
       </div>
       <div class="prev">
         <div class="prevContainer">
-          <p>Say So</p>
-          <video name="video_file2" class="Dance1" autoplay muted loop>
-              <source src="SaySo.mp4" type="video/mp4">
-          </video>
+          <form action="" method="POST" enctype="multipart/form-data" name="video_file2_upload">
+            <p>Say So</p>
+            <video name="video_file2" class="Dance1" autoplay muted loop>
+                <source src="SaySo.mp4" type="video/mp4">
+            </video>
+            <div id="upload-input" hidden style="position: absolute;">
+              <input type="text" name="tutorialDanceId" value="SaySo"/>
+              <input id="video_file2" name="videofile" type="file">
+            </div>
+          </form>
         </div>
       </div>
       <div class="selected">
         <div class="selectedContainer" >
-          <form action="http://66b1681cb990.ngrok.io/handleDanceComparison" method="POST" enctype="multipart/form-data" name="upload_form">
+          <form action="" method="POST" enctype="multipart/form-data" name="video_file3_upload">
             <p>Chicken Noodle Soup</p>
             <video name="video_file3" class="Dance1" autoplay muted loop>
               <source src="CNS.mp4" type="video/mp4">
             </video>
             <div id="upload-input" hidden style="position: absolute;">
-              <input type="text" name="tutorialDanceId" value="TUTORIAL_HANDS"/>
-              <input id="video_file1" name="videofile" type="file">
+              <input type="text" name="tutorialDanceId" value="CNS"/>
+              <input id="video_file3" name="videofile" type="file">
             </div>
           </form>
         </div>
       </div>
       <div class="next">
         <div class="nextContainer">
-          <p>The Box</p>
-          <video name="video_file4" class="Dance1" autoplay muted loop>
-              <source src="TheBox.mp4" type="video/mp4">
-          </video>
+          <form action="" method="POST" enctype="multipart/form-data" name="video_file4_upload">
+            <p>The Box</p>
+            <video name="video_file4" class="Dance1" autoplay muted loop>
+                <source src="TheBox.mp4" type="video/mp4">
+            </video>
+            <div id="upload-input" hidden style="position: absolute;">
+              <input type="text" name="tutorialDanceId" value="TheBox"/>
+              <input id="video_file4" name="videofile" type="file">
+            </div>
+          </form>
         </div>
       </div>
       <div class="nextRightSecond">
         <div class="nextRightSecondContainer">
-          <p>Savage</p>
-          <video name="video_file5" class="Dance1" autoplay muted loop>
-              <source src="Savage.mp4" type="video/mp4">
-          </video>
+          <form action="" method="POST" enctype="multipart/form-data" name="video_file5_upload">
+            <p>Savage</p>
+            <video name="video_file5" class="Dance1" autoplay muted loop>
+                <source src="Savage.mp4" type="video/mp4">
+            </video>
+            <div id="upload-input" hidden style="position: absolute;">
+              <input type="text" name="tutorialDanceId" value="Savage"/>
+              <input id="video_file5" name="videofile" type="file">
+            </div>
+          </form>
         </div>
       </div>
     </div>
@@ -74,18 +98,23 @@
   <script src="app.js"></script>
   <button id="myBtn"></button>
   <div id="myModal" class="modal">
-  <div class="modal-content"> 
-    <div class="Data-Stats">
-      <span class="close">&times;</span>
-      <h2>Dance Statistics</h2>
-    </div>
-    <div class="Data-Grade">
-      <h2>Dance Grades</h2>
-    </div>
-    <div class="Data-Weakness">
-      <h2>Dance Weakness</h2>
+    <div class="modal-content"> 
+      <!-- <div class="Data-Stats"> -->
+        <span id="modalClose" class="close">&times;</span>
+        <p class="modalPercent" id="modalPercent">0%</p>
+        <p class="modalHeader">Dance Weaknesses</p>
+        <div class="Data-Weakness">
+          <textarea readonly class="weaknessText" id="weaknessText">
+          </textarea>
+        </div>
+      
+
+      <!-- </div> -->
+      <!-- <div class="Data-Grade">
+        <h2>Dance Grades</h2>
+      </div> -->
+      
     </div>
   </div>
-</div>
 </body>
 </html>

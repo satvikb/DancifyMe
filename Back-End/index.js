@@ -43,7 +43,7 @@ app.post("/handleDanceComparison", (req, res) => {
 
   // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
   sampleFile = req.files.videofile;
-  var randomDanceID = getRandomInt(10000);
+  var randomDanceID = getRandomInt(1000000);
   uploadPath = resolve('rawDanceUploads/' + randomDanceID + "." + mime.extension(sampleFile.mimetype));
 
   // Use the mv() method to place the file somewhere on your server
@@ -53,13 +53,13 @@ app.post("/handleDanceComparison", (req, res) => {
 
     
     ffmpeg.ffprobe(uploadPath, function(err, metadata) {
-      // console.log("Metadata " + JSON.stringify(metadata)+"_"+uploadPath);
+      console.log("Metadata " + JSON.stringify(metadata)+"_"+uploadPath);
       var streams = metadata["streams"]
       var highestFps = 0
       var longestDuration = 0
       for(var i = 0; i < streams.length; i++){
         var s = streams[i];
-        var fps = parseInt(s["avg_frame_rate"].split("/")[0])
+        var fps = parseInt(s["avg_frame_rate"].split("/")[0]) / parseInt(s["avg_frame_rate"].split("/")[1])
         var dur = parseInt(s["duration"])
 
         longestDuration = dur > longestDuration ? dur : longestDuration
@@ -70,7 +70,7 @@ app.post("/handleDanceComparison", (req, res) => {
       dance_handler.processUploadedDance(randomDanceID, uploadPath, function(normalizedKeypointsLocation){
         var tutorialDataPath = dance_handler.getNormalizedDanceDataURL(tutorialDanceId)
         var answerObject = dance_handler.compareTwoNormalizedDances(tutorialDataPath, normalizedKeypointsLocation)
-        console.log("Compare "+normalizedKeypointsLocation+"__with tutorial "+tutorialDataPath+"__"+JSON.stringify(answerObject))
+        // console.log("Compare "+normalizedKeypointsLocation+"__with tutorial "+tutorialDataPath+"__"+JSON.stringify(answerObject))
         answerObject["fps"] = highestFps
         answerObject["duration"] = longestDuration
 
@@ -82,12 +82,23 @@ app.post("/handleDanceComparison", (req, res) => {
   });
 });
 
-// dance_handler.processTutorialVideo("handsUpload", "rawDanceUploads/Upload.mp4", function(normalizedDataURL){
-//   // dance_handler.compareTwoNormalizedDances(normalizedDataURL, normalizedDataURL)
-//   // dance_handler.compareTwoNormalizedDances(resolve("processedDances/TUTORIAL_HANDS/TUTORIAL_HANDS.json"), resolve("processedDances/gabe/gabe.json"))
+// one time thing
+// dance_handler.processTutorialVideo("CNS", "rawDanceUploads/CNS.mp4", function(normalizedDataURL){
+//   dance_handler.processTutorialVideo("TheBox", "rawDanceUploads/TheBox.mp4", function(normalizedDataURL){
+//     dance_handler.processTutorialVideo("Renegade", "rawDanceUploads/Renegade.mp4", function(normalizedDataURL){
+//       dance_handler.processTutorialVideo("Savage", "rawDanceUploads/Savage.mp4", function(normalizedDataURL){
+//         dance_handler.processTutorialVideo("SaySo", "rawDanceUploads/SaySo.mp4", function(normalizedDataURL){
+//         });
+//       });
+//     });
+//   });
 // });
 
-// dance_handler.compareTwoNormalizedDances(resolve("processedDances/TUTORIAL_HANDS/TUTORIAL_HANDS.json"), resolve("processedDances/handsUpload/handsUpload.json"))
+
+
+
+
+// dance_handler.compareTwoNormalizedDances(resolve("processedDances/TheBox/TheBox.json"), resolve("processedDances/334321/334321.json"))
 // dance_handler.compareTwoNormalizedDances(resolve("processedDances/TUTORIAL_HANDS/TUTORIAL_HANDS.json"), resolve("processedDances/edison/edison.json"))
 // dance_handler.compareTwoNormalizedDances(resolve("processedDances/TUTORIAL_HANDS/TUTORIAL_HANDS.json"), resolve("processedDances/arnav/arnav.json"))
 // dance_handler.compareTwoNormalizedDances(resolve("processedDances/TUTORIAL_HANDS/TUTORIAL_HANDS.json"), resolve("processedDances/arnav2/arnav2.json"))

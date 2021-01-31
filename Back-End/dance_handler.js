@@ -196,8 +196,11 @@ module.exports = {
 
         
         const BODY_PART_VALID_THRESHOLD = 0.50; // the confidence of the body part has to be at least 50% for it to be considered a valid body part. Should ALWAYS be > 0
-        const BODY_PART_DISTANCE_CLOSE_THRESHOLD = 0.175; // the body parts have to be within 5% of each other
         const FIRST_FRAME_CONSIDERED_THRESHOLD = 0.50; // 50% of the body parts in the uploaded dance frame has to match with the first frame of the tutorial dance.
+
+        // the most important threshold
+        const BODY_PART_DISTANCE_CLOSE_THRESHOLD = 0.3; // 0.175 // the body parts have to be within 5% of each other
+
 
         function compareTwoNormalizedFrames(frame1, frame2){
             // frame1 = [x1, y1, c1, x2, y2, c2, ...]
@@ -248,7 +251,7 @@ module.exports = {
         var tutorialDanceFrames = tutorialDanceData["frames"]
         var tutorialStartFrameNum = tutorialDanceData["startFrame"] == undefined ? 0 : tutorialDanceData["startFrame"]
         var tutorialStartFrameData = tutorialDanceFrames[tutorialStartFrameNum+""]
-
+        // console.log("Start Frame "+JSON.stringify(tutorialDanceFrames["0"])+"__)_"+tutorialDanceFileURL)
         var uploadedDanceDataRaw = fs.readFileSync(normalizedDanceURL, 'utf-8')
         var uploadedDanceData = JSON.parse(uploadedDanceDataRaw)
         var uploadedDanceFrames = uploadedDanceData["frames"]
