@@ -146,6 +146,8 @@ main
   height: 400px;
   transform: translateY(150%);
   overflow: hidden;
+  animation-name: initAnim;
+  animation-duration: 3s;
 }
 
 #carousel div 
@@ -395,6 +397,7 @@ main
   bottom: 10px;
 }
 
+
 .modal {
 display: none; /* Hidden by default */
 position: fixed; /* Stay in place */
@@ -479,4 +482,9 @@ h2{
   text-shadow: 0 0 0 transparent, 0 0 10px #ff003c, 0 0 20px rgba(255, 0, 60, 0.5), 0 0 40px #ff003c, 0 0 100px #ff003c, 0 0 200px #ff003c, 0 0 300px #ff003c, 0 0 500px #ff003c, 0 0 1000px #ff003c;
   -webkit-animation: blink 4s infinite alternate;
         animation: blink 4s infinite alternate;
+
+@keyframes initAnim{
+  0%   { top:100vh; }
+  100% { top:0px;}
+
 }

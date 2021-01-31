@@ -2,3 +2,5 @@ openpose
 node_modules
 rawDanceFrames
 rawDanceUploads
+processedDances
+ffprobe.exe
