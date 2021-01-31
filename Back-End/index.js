@@ -2,6 +2,7 @@
 var express = require("express");
 const fileUpload = require('express-fileupload');
 var mime = require('mime-types')
+var resolve = require('path').resolve
 
 var app = express();
 var bodyParser = require("body-parser")
@@ -62,9 +63,12 @@ app.post("/handleDanceComparison", (req, res) => {
   });
 });
 
-// dance_handler.processTutorialVideo("TUTORIAL_TEST", "rawDanceUploads/12345.mp4", function(normalizedDataURL){
+dance_handler.processTutorialVideo("handsUpload", "rawDanceUploads/Upload.mp4", function(normalizedDataURL){
+  // dance_handler.compareTwoNormalizedDances(normalizedDataURL, normalizedDataURL)
+  // dance_handler.compareTwoNormalizedDances(resolve("processedDances/TUTORIAL_HANDS/TUTORIAL_HANDS.json"), resolve("processedDances/gabe/gabe.json"))
+});
 
-// });
+dance_handler.compareTwoNormalizedDances(resolve("processedDances/TUTORIAL_HANDS/TUTORIAL_HANDS.json"), resolve("processedDances/handsUpload/handsUpload.json"))
 
 // Init server.
 app.listen(3000, function () {

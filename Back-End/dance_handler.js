@@ -51,16 +51,19 @@ module.exports = {
             
 
             var combinedKeyframeDataLocation = resolve(jsonWriteLocation+"/keyframeCompilation.json")
+
+            console.log("write to "+combinedKeyframeDataLocation)
             var normalizedKeyframeLocation = module.exports.getNormalizedDanceDataURL(danceID)
             // processOpenPoseKeyframes
-            module.exports.processOpenPoseKeyframes(jsonWriteLocation, combinedKeyframeDataLocation)
-            // normalizeKeyframeData
-            module.exports.normalizeKeyframeData(combinedKeyframeDataLocation, normalizedKeyframeLocation)
-            
-            completion(normalizedKeyframeLocation)
+            module.exports.processOpenPoseKeyframes(jsonWriteLocation, combinedKeyframeDataLocation, function(){
+                // normalizeKeyframeData
+                module.exports.normalizeKeyframeData(combinedKeyframeDataLocation, normalizedKeyframeLocation)
+                completion(normalizedKeyframeLocation)
+            })
+           
         });
     },
-    processOpenPoseKeyframes: function(keyframesFolder, danceFileOutputURL){
+    processOpenPoseKeyframes: function(keyframesFolder, danceFileOutputURL, completion){
         // combine all the keyframes into a single JSON file
         /*
             {
@@ -86,18 +89,22 @@ module.exports = {
             var finalFrameArray = {}
 
             filenames.forEach(function(filename) {
-                var rawData = fs.readFileSync(keyframesFolder + filename, 'utf-8');
-                var frameNum = filename.split("_")[1]
-
-                var keypointData = JSON.parse(rawData)
-                var peopleData = keypointData["people"]
-                if(peopleData.length > 0){
-                    var personKeypoints = peopleData[0]["pose_keypoints_2d"]
-                    finalFrameArray[frameNum+""] = personKeypoints
+                if(!filename.includes("ompilation")){
+                    var rawData = fs.readFileSync(resolve(keyframesFolder + "/" + filename), 'utf-8');
+                    var frameNum = parseInt(filename.split("_")[1])
+    
+                    var keypointData = JSON.parse(rawData)
+                    // console.log("KPD "+JSON.stringify(keypointData))
+                    var peopleData = keypointData["people"]
+                    if(peopleData.length > 0){
+                        var personKeypoints = peopleData[0]["pose_keypoints_2d"]
+                        finalFrameArray[frameNum+""] = personKeypoints
+                    }
                 }
             });
-
+            console.log("WRITING FILE TO "+danceFileOutputURL)
             fs.writeFileSync(danceFileOutputURL, JSON.stringify({"frames":finalFrameArray}))
+            completion()
         });
 
     },
@@ -130,18 +137,18 @@ module.exports = {
                     // calculate bounding box (BB)
                     // Calculate two corner points (top left, bottom right)
                     // Parse array to separate values into separate array
-                    for ( i = 0; i < keypointData.length - 1; i += 3) {
-                        var xValsArray = new Array();
-                        var yValsArray = new Array();
+                    var xValsArray = []
+                    var yValsArray = []
+                    for (var i = 0; i < keypointData.length - 1; i += 3) {
                         xValsArray.push(keypointData[i]);
                         yValsArray.push(keypointData[i + 1]);
                     }
 
-                    var minYVal = Math.min(yValsArray);
-                    var minXVal = Math.min(xValsArray);
+                    var minYVal = Math.min(...yValsArray);
+                    var minXVal = Math.min(...xValsArray);
 
-                    var maxYVal = Math.max(yValsArray);
-                    var maxXVal = Math.max(xValsArray);
+                    var maxYVal = Math.max(...yValsArray);
+                    var maxXVal = Math.max(...xValsArray);
                     // normalize all x and y with BB (between 0-1)
 
                     // x_norm = (x - x_min )/ x_width; y_norm = (y - y_min)/y_width
@@ -158,7 +165,7 @@ module.exports = {
                     */
 
                     // save the new array with the same confidence values
-                    var normalizedArray = keyPointData;
+                    var normalizedArray = keypointData;
                     for (i = 0; i < keypointData.length - 1; i += 3) {
                         normalizedArray[i] = (keypointData[i] - minXVal) / x_width;
                         normalizedArray[i+1] = (keypointData[i+1] - minYVal) / y_width;
@@ -166,6 +173,7 @@ module.exports = {
                     normalizedData[frameNum] = normalizedArray
                 }
             }
+            // console.log("NORM "+JSON.stringify(normalizedData))
             fs.writeFileSync(normalizedDanceURL, JSON.stringify({"frames":normalizedData}))
         }
         return normalizedData;
@@ -187,15 +195,17 @@ module.exports = {
         */
 
         
-        const BODY_PART_VALID_THRESHOLD = 0.5; // the confidence of the body part has to be at least 50% for it to be considered a valid body part
-        const BODY_PART_DISTANCE_CLOSE_THRESHOLD = 0.05; // the body parts have to be within 5% of each other
-        const FIRST_FRAME_CONSIDERED_THRESHOLD = 0.5; // 50% of the body parts in the uploaded dance frame has to match with the first frame of the tutorial dance.
+        const BODY_PART_VALID_THRESHOLD = 0.50; // the confidence of the body part has to be at least 50% for it to be considered a valid body part
+        const BODY_PART_DISTANCE_CLOSE_THRESHOLD = 0.175; // the body parts have to be within 5% of each other
+        const FIRST_FRAME_CONSIDERED_THRESHOLD = 0.50; // 50% of the body parts in the uploaded dance frame has to match with the first frame of the tutorial dance.
 
         function compareTwoNormalizedFrames(frame1, frame2){
             // frame1 = [x1, y1, c1, x2, y2, c2, ...]
             // frame2 = [x1, y1, c1, x2, y2, c2, ...]
 
             // return percent of body parts in right place
+            // console.log("F1 "+frame1)
+            // console.log("F2 "+frame2)
 
             var numOfBodyPartsCompared = 0;
             var numOfBodyPartsCorrect = 0;
@@ -206,7 +216,7 @@ module.exports = {
 
                 var f2x = frame2[i]
                 var f2y = frame2[i+1]
-                var f2c = frame1[i+2]
+                var f2c = frame2[i+2]
 
                 if(f1c > BODY_PART_VALID_THRESHOLD && f2c > BODY_PART_VALID_THRESHOLD){
                     numOfBodyPartsCompared += 1;
@@ -225,10 +235,10 @@ module.exports = {
         }
 
         var tutorialDanceDataRaw = fs.readFileSync(tutorialDanceFileURL, 'utf-8')
-        var turorialDanceData = JSON.parse(tutorialDanceDataRaw)
-        var turorialDanceFrames = turorialDanceData["frames"]
-        var tutorialStartFrameNum = tutorialDanceData["startFrame"] == undefined ? tutorialDanceData["startFrame"] : 0
-        var tutorialStartFrameData = tutorialDanceFrames[tutorialStartFrameNum]
+        var tutorialDanceData = JSON.parse(tutorialDanceDataRaw)
+        var tutorialDanceFrames = tutorialDanceData["frames"]
+        var tutorialStartFrameNum = tutorialDanceData["startFrame"] == undefined ? 0 : tutorialDanceData["startFrame"]
+        var tutorialStartFrameData = tutorialDanceFrames[tutorialStartFrameNum+""]
 
         var uploadedDanceDataRaw = fs.readFileSync(normalizedDanceURL, 'utf-8')
         var uploadedDanceData = JSON.parse(uploadedDanceDataRaw)
@@ -237,7 +247,18 @@ module.exports = {
         // calculate most likely uploaded start frame
         // then for each likely start frame calculate the dance corectness
 
+        function calculateDancePercentForSimilarityArray(similarityArray){
+            var totalFrames = similarityArray.length
+            var totalCount = 0;
+            for(var i = 0; i < totalFrames; i++){
+                totalCount += similarityArray[i][1]
+            }
+            var percent = totalCount / totalFrames
+            return [percent, similarityArray]
+        }
+
         var possibleAnswerArrays = {}
+        var computedPercents = [] // [ [percent, frameData], [percent, [ ["0", 0.6], ["1", 0.5], ... ] ] ]
 
         if(uploadedDanceFrames != undefined){
             for (var frameNum in uploadedDanceFrames) {
@@ -246,12 +267,24 @@ module.exports = {
                     // compare frame with start frame
                     var bodyPartCorrectPercent = compareTwoNormalizedFrames(uploadedFrame, tutorialStartFrameData)
                     if(bodyPartCorrectPercent > FIRST_FRAME_CONSIDERED_THRESHOLD){
+                        // console.log("First Frame "+frameNum)
                         // this is a candidate frame for the first frame
-                        calculateDanceSimilarity(frameNum)
+                        var danceSimilarityArrayForStartFrame = calculateDanceSimilarity(frameNum)
+                        possibleAnswerArrays[frameNum] = danceSimilarityArrayForStartFrame
+                        computedPercents.push(calculateDancePercentForSimilarityArray(danceSimilarityArrayForStartFrame))
                     }
                 }
             }
         }
+
+        if(computedPercents.length > 0){
+            computedPercents.sort(function(first, second) {
+                return second[0] - first[0];
+            });
+            console.log("BEST PERCENT: "+computedPercents[0][0])
+        }
+        // console.log("DANCE ANSWERS"+JSON.stringify(possibleAnswerArrays))
+        // fs.writeFileSync("danceAnswers.json", JSON.stringify(possibleAnswerArrays)) // testing
 
         function calculateDanceSimilarity(uploadedFirstFrame){
             // create sort for dance
@@ -261,15 +294,15 @@ module.exports = {
             });
             
             // Sort the array based on the second element
-            items.sort(function(first, second) {
+            danceFramesArray.sort(function(first, second) {
                 return second[0] - first[0];
             });
   
             // calculate the confidence of each frame
             var numberOfFramesCompared = 0;
             var totalComputation = []
-            for(var i = 0; i < items.length; i++){
-                var frameData = items[i]
+            for(var i = 0; i < danceFramesArray.length; i++){
+                var frameData = danceFramesArray[i]
                 var frameNum = frameData[0]
                 var frameKeypoints = frameData[1]
 
@@ -284,13 +317,11 @@ module.exports = {
                     }
                 }
             }
-            // TODO calculate the best totalComputation value
-            if(totalComputation.length > 0){
-                return totalComputation[0][1]
-            }else{
-                console.log("No dance similarity")
-                return 0;
-            }
+            // Sort the array based on the second element
+            totalComputation.sort(function(first, second) {
+                return second[0] - first[0];
+            });
+            return totalComputation
         }
         
 
