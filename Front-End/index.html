@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <title>OpenPose</title>
+</head>
+<body>
+  <div class="videoParent">
+    <video id="video" autoplay loop muted>
+        <source src="video.mp4" type="video/mp4" />
+    </video>
+  </div>
+  <div class="border">
+    <p id="word" class="largelargeWords">
+      Dancify
+    </p>
+    <p id="word" class="largeWords">
+      Time To BoogieWoogie!
+    </p>
+  </div>
+  <main>
+    <div id="carousel">
+      <div class="prevLeftSecond">
+        <div class="prevLeftSecondContainer">
+          <p>Renegade</p>
+          <video name="video_file1" class="Dance1" autoplay muted loop>
+              <source src="Dance1.mp4" type="video/mp4">
+          </video>
+        </div>
+      </div>
+      <div class="prev">
+        <div class="prevContainer">
+          <p>Say So</p>
+          <video name="video_file2" class="Dance1" autoplay muted loop>
+              <source src="Dance1.mp4" type="video/mp4">
+          </video>
+        </div>
+      </div>
+      <div class="selected">
+        <div class="selectedContainer">
+          <form action="http://0df1dc9d19da.ngrok.io/handleDanceComparison" method="POST" enctype="multipart/form-data" name="upload_form">
+            <p>Cannibal</p>
+            <video name="video_file3" class="Dance1" autoplay muted loop>
+              <source src="Dance1.mp4" type="video/mp4">
+            </video>
+            <div id="upload-input" hidden style="position: absolute;">
+              <input id="video_file1" name="videofile" type="file">
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="next">
+        <div class="nextContainer">
+          <p>The Box</p>
+          <video name="video_file4" class="Dance1" autoplay muted loop>
+              <source src="Dance1.mp4" type="video/mp4">
+          </video>
+        </div>
+      </div>
+      <div class="nextRightSecond">
+        <div class="nextRightSecondContainer">
+          <p>Savage</p>
+          <video name="video_file5" class="Dance1" autoplay muted loop>
+              <source src="Dance1.mp4" type="video/mp4">
+          </video>
+        </div>
+      </div>
+    </div>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,396 @@
+
+.videoParent 
+{
+  overflow: relative;
+}
+
+.border
+{
+  border: 10px solid #ff0303;
+  border-radius: 7px;
+}
+
+video
+{
+  position: absolute;
+  left: 50%; /* % of surrounding element */
+  top: 50%;
+  transform: translate(-50%, -50%); /* % of current element */
+}
+
+html,body
+{
+  width: 100%;
+  height: 100%;
+  margin: 0px;
+  padding: 0px;
+  overflow-x: hidden;
+  overflow: hidden;
+}
+
+.largelargeWords
+{
+  text-decoration: underline;  
+  font-family: "neontubes";
+  position: absolute;
+  margin-left: auto;
+  margin-right: auto;
+  left: 0;
+  right: 0;
+  font-size: 100px;
+  top: -10vh;
+  color: #d4eaff;
+  text-align: center;
+  text-shadow: 0 0 0 transparent, 0 0 10px #ff003c, 0 0 20px rgba(255, 0, 60, 0.5), 0 0 40px #ff003c, 0 0 100px #ff003c, 0 0 200px #ff003c, 0 0 300px #ff003c, 0 0 500px #ff003c, 0 0 1000px #ff003c;
+  -webkit-animation: blink 4s infinite alternate;
+        animation: blink 4s infinite alternate;
+}
+
+.largeWords
+{
+  text-decoration: underline;  
+  font-family: "neontubes";
+  position: absolute;
+  margin-left: auto;
+  margin-right: auto;
+  left: 0;
+  right: 0;
+  font-size: 25px;
+  top: 15vh;
+  color: #d4eaff;
+  text-align: center;
+  text-shadow: 0 0 0 transparent, 0 0 10px #ff003c, 0 0 20px rgba(255, 0, 60, 0.5), 0 0 40px #ff003c, 0 0 100px #ff003c, 0 0 200px #ff003c, 0 0 300px #ff003c, 0 0 500px #ff003c, 0 0 1000px #ff003c;
+  -webkit-animation: blink 4s infinite alternate;
+        animation: blink 4s infinite alternate;
+}
+
+@font-face 
+{
+  font-family: 'neontubes';
+  src: url("https://bitbucket.org/kennethjensen/webfonts/raw/fc13c1cb430a0e9462da56fe3f421ff7af72db71/neontubes/neontubes-webfont.eot");
+  src: url("https://bitbucket.org/kennethjensen/webfonts/raw/fc13c1cb430a0e9462da56fe3f421ff7af72db71/neontubes/neontubes-webfont.eot?#iefix") format("embedded-opentype"), url("https://bitbucket.org/kennethjensen/webfonts/raw/fc13c1cb430a0e9462da56fe3f421ff7af72db71/neontubes/neontubes-webfont.woff2") format("woff2"), url("https://bitbucket.org/kennethjensen/webfonts/raw/fc13c1cb430a0e9462da56fe3f421ff7af72db71/neontubes/neontubes-webfont.woff") format("woff"), url("https://bitbucket.org/kennethjensen/webfonts/raw/fc13c1cb430a0e9462da56fe3f421ff7af72db71/neontubes/neontubes-webfont.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@-webkit-keyframes buzz 
+{
+  70% 
+  {
+    opacity: 0.80;
+  }
+}
+
+@keyframes buzz 
+{
+  70% 
+  {
+    opacity: 0.80;
+  }
+}
+@-webkit-keyframes blink 
+{
+  40% 
+  {
+    opacity: 1;
+  }
+  42% 
+  {
+    opacity: 0.8;
+  }
+  43% 
+  {
+    opacity: 1;
+  }
+  45% 
+  {
+    opacity: 0.2;
+  }
+  46% 
+  {
+    opacity: 1;
+  }
+}
+@keyframes blink {
+  40% 
+  {
+    opacity: 1;
+  }
+  42% 
+  {
+    opacity: 0.8;
+  }
+  43% 
+  {
+    opacity: 1;
+  }
+  45% 
+  {
+    opacity: 0.2;
+  }
+  46% 
+  {
+    opacity: 1;
+  }
+}
+
+main 
+{
+  margin: 0;
+  padding: 0;
+}
+
+#carousel 
+{
+  position: relative;
+  height: 400px;
+  transform: translateY(125%);
+  overflow: hidden;
+}
+
+#carousel div 
+{
+  position: absolute;
+  transition: transform 1s, left 1s, opacity 1s, z-index 0s;
+  opacity: 1;
+}
+
+#carousel div img
+{
+  width: 400px;
+  transition: width 1s;
+}
+
+#carousel div video 
+{
+  top:45%;
+  transition: width 1s;
+}
+
+.learnBtn 
+{
+  position: fixed;
+  left: 50%;
+  transform: translateX(-40%);
+  bottom: 10px;
+}
+
+.selectedContainer 
+{
+  padding-bottom: 50px;
+  z-index: 10;
+  left: 50%;
+  transform: translateY(-10px) translateX(-50%);
+  width: 400px;
+  height: 400px;
+  overflow: hidden;
+  font-family: "neontubes";
+  position: absolute;
+  margin-left: auto;
+  margin-right: auto;
+  left: 0;
+  right: 0;
+  font-size: 30px;
+  color: #d4eaff;
+  text-align: center;
+  text-shadow: 0 0 0 transparent, 0 0 10px #11c1f7, 0 0 20px rgba(21, 207, 240, 0.5), 0 0 40px rgb(15, 243, 224), 0 0 100px #10e7f7, 0 0 200px rgb(39, 201, 230), 0 0 300px #2590b1, 0 0 500px rgb(10, 139, 38), 0 0 1000px #1faf1a;
+-webkit-animation: blink 4s infinite alternate;
+      animation: blink 4s infinite alternate;
+}
+
+.nextContainer 
+{
+  padding-bottom: 30px;
+  z-index: 5;
+  left: 65px;
+  transform: translateY(0%) translateX(-50%);
+  width: 300px;
+  height: 300px;
+  font-family: "neontubes";
+  position: absolute;
+  margin-left: auto;
+  margin-right: auto;
+  left: 0;
+  right: 0;
+  font-size: 20px;
+  color: #d4eaff;
+  text-align: center;
+  text-shadow: 0 0 0 transparent, 0 0 10px #ff003c, 0 0 20px rgba(255, 0, 60, 0.5), 0 0 40px #ff003c, 0 0 100px #ff003c, 0 0 200px #ff003c, 0 0 300px #ff003c, 0 0 500px #ff003c, 0 0 1000px #ff003c;
+-webkit-animation: blink 4s infinite alternate;
+      animation: blink 4s infinite alternate;
+}
+
+.prevContainer 
+{
+  padding-bottom: 30px;
+  z-index: 5;
+  left: -65px;
+  transform: translateY(0%) translateX(-50%);
+  width: 300px;
+  height: 300px;
+  font-family: "neontubes";
+  position: absolute;
+  margin-left: auto;
+  margin-right: auto;
+  left: 0;
+  right: 0;
+  font-size: 20px;
+  color: #d4eaff;
+  text-align: center;
+  text-shadow: 0 0 0 transparent, 0 0 10px #ff003c, 0 0 20px rgba(255, 0, 60, 0.5), 0 0 40px #ff003c, 0 0 100px #ff003c, 0 0 200px #ff003c, 0 0 300px #ff003c, 0 0 500px #ff003c, 0 0 1000px #ff003c;
+-webkit-animation: blink 4s infinite alternate;
+      animation: blink 4s infinite alternate;
+}
+
+.prevLeftSecondContainer 
+{
+  z-index: 4;
+  left: -100px;
+  transform: translateY(50%) translateX(-50%);
+  opacity: 0.7;
+  width: 200px;
+  height: 200px;
+  font-family: "neontubes";
+  position: absolute;
+  margin-left: auto;
+  margin-right: auto;
+  left: 0;
+  right: 0;
+  font-size: 10px;
+  color: #d4eaff;
+  text-align: center;
+  text-shadow: 0 0 0 transparent, 0 0 10px #22d82b, 0 0 20px rgba(25, 223, 51, 0.5), 0 0 40px rgb(30, 221, 30), 0 0 100px #1edb37, 0 0 200px rgb(39, 161, 15), 0 0 300px #31b125, 0 0 500px rgb(10, 139, 38), 0 0 1000px #1faf1a;
+-webkit-animation: blink 4s infinite alternate;
+      animation: blink 4s infinite alternate;
+}
+
+.nextRightSecondContainer 
+{
+  z-index: 4;
+  left: 100px;
+  transform: translateY(50%) translateX(-50%);
+  opacity: 0.7;
+  width: 200px;
+  height: 200px;
+  font-family: "neontubes";
+  position: absolute;
+  margin-left: auto;
+  margin-right: auto;
+  left: 0;
+  right: 0;
+  font-size: 10px;
+  color: #d4eaff;
+  text-align: center;
+  text-shadow: 0 0 0 transparent, 0 0 10px #22d82b, 0 0 20px rgba(25, 223, 51, 0.5), 0 0 40px rgb(30, 221, 30), 0 0 100px #1edb37, 0 0 200px rgb(39, 161, 15), 0 0 300px #31b125, 0 0 500px rgb(10, 139, 38), 0 0 1000px #1faf1a;
+-webkit-animation: blink 4s infinite alternate;
+      animation: blink 4s infinite alternate;
+}
+
+.hideRightContainer 
+{
+  left: 100%;
+  opacity: 0;
+  transform: translateY(50%) translateX(-50%);
+}
+
+.hideLeftContainer 
+{
+  left: 0%;
+  opacity: 0;
+  transform: translateY(50%) translateX(-50%);
+}
+
+#carousel div.hideLeft 
+{
+  left: 0%;
+  opacity: 0;
+  transform: translateY(50%) translateX(-50%);
+}
+
+#carousel div.hideLeft img 
+{
+  width: 200px;
+}
+
+#carousel div.hideRight 
+{
+  left: 100%;
+  opacity: 0;
+  transform: translateY(50%) translateX(-50%);
+}
+
+#carousel div.hideRight img 
+{
+  width: 200px;
+}
+
+#carousel div.prev 
+{
+  z-index: 5;
+  left: 30%;
+  transform: translateY(50px) translateX(-50%);
+}
+
+#carousel div.prev img 
+{
+  width: 300px;
+}
+
+#carousel div.prevLeftSecond 
+{
+  z-index: 4;
+  left: 15%;
+  transform: translateY(50%) translateX(-50%);
+  opacity: 0.7;
+}
+
+#carousel div.prevLeftSecond img 
+{
+  width: 200px;
+}
+
+#carousel div.selected 
+{
+  z-index: 10;
+  left: 50%;
+  transform: translateY(0px) translateX(-50%);
+}
+
+#carousel div.next 
+{
+  z-index: 5;
+  left: 70%;
+  transform: translateY(50px) translateX(-50%);
+}
+
+#carousel div.next img 
+{
+  width: 300px;
+}
+
+#carousel div.nextRightSecond 
+{
+  z-index: 4;
+  left: 85%;
+  transform: translateY(50%) translateX(-50%);
+  opacity: 0.7;
+}
+
+#carousel div.nextRightSecond img 
+{
+  width: 200px;
+}
+
+#carousel video 
+{
+  overflow: hidden;
+  width: 100%;
+}
+
+.buttons 
+{
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 10px;
+}
