@@ -79,6 +79,66 @@ for(var i = 0, max = all.length; i < max; i++)
 }
 
 $("#video_file1").change(function(e) {
-  $("form[name='upload_form']").submit();
+
+  console.log("SUBMIT FORM DATA")
+
+  var form = new FormData($("form[name='upload_form']")[0]);  
+  // // Make the ajax call
+  $.ajax({
+      url: 'http://localhost:3000/handleDanceComparison',
+      type: 'POST',
+      beforeSend: function(request) {
+        request.setRequestHeader("Access-Control-Allow-Origin", "*");
+      },
+      // crossDomain:true, 
+      success: function (res) {
+         // your code after succes
+         console.log("RESSSS "+JSON.stringify(res))
+      },      
+      data: form,                
+      cache: false,
+      contentType: false,
+      processData: false,
+      dataType:"json"
+  });  
+
+
+  // var xhr = new XMLHttpRequest();
+  // xhr.open("POST", "http://localhost:3000/handleDanceComparison"); 
+  // xhr.onload = function(event){ 
+  //     alert("Success, server responded with: " + event.target.response); // raw response
+  // }; 
+  // // or onerror, onabort
+  // var formData = new FormData($("form[name='upload_form']")[0]); 
+  // xhr.send(formData);
+
+
   e.preventDefault();
 })
+
+
+// $("#video_file1").change(function(e) {
+
+//   console.log("SUBMIT FORM DATA")
+
+//   // console.log("RESSSS "+res)
+
+//   $("form[name='upload_form']").submit(function(e){
+//     e.preventDefault();    
+//     var formData = new FormData(this);
+
+//     $.ajax({
+//         url: 'http://66b1681cb990.ngrok.io/handleDanceComparison',
+//         type: 'POST',
+//         data: formData,
+//         crossDomain:true, 
+//         success: function (data) {
+//             alert(data)
+//         },
+//         cache: false,
+//         contentType: false,
+//         processData: false
+//     });
+//   });
+//   e.preventDefault();
+// })

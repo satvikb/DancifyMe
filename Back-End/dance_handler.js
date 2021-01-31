@@ -195,7 +195,7 @@ module.exports = {
         */
 
         
-        const BODY_PART_VALID_THRESHOLD = 0.50; // the confidence of the body part has to be at least 50% for it to be considered a valid body part
+        const BODY_PART_VALID_THRESHOLD = 0.50; // the confidence of the body part has to be at least 50% for it to be considered a valid body part. Should ALWAYS be > 0
         const BODY_PART_DISTANCE_CLOSE_THRESHOLD = 0.175; // the body parts have to be within 5% of each other
         const FIRST_FRAME_CONSIDERED_THRESHOLD = 0.50; // 50% of the body parts in the uploaded dance frame has to match with the first frame of the tutorial dance.
 
@@ -203,12 +203,14 @@ module.exports = {
             // frame1 = [x1, y1, c1, x2, y2, c2, ...]
             // frame2 = [x1, y1, c1, x2, y2, c2, ...]
 
-            // return percent of body parts in right place
+            // return percent of body parts in right place and the body parts that are out of place
             // console.log("F1 "+frame1)
             // console.log("F2 "+frame2)
 
             var numOfBodyPartsCompared = 0;
             var numOfBodyPartsCorrect = 0;
+
+            var wrongBodyParts = []
             for(var i = 0; i < frame1.length; i += 3){
                 var f1x = frame1[i]
                 var f1y = frame1[i+1]
@@ -227,11 +229,18 @@ module.exports = {
                     
                     if(xCompare < BODY_PART_DISTANCE_CLOSE_THRESHOLD && yCompare < BODY_PART_DISTANCE_CLOSE_THRESHOLD){
                         numOfBodyPartsCorrect += 1;
+                    }else{
+                        // this body part is not close enough
+                        var bodyPartId = Math.floor(i/3)
+                        wrongBodyParts.push(bodyPartId)
                     }
+                }else{
+                    // we are going to assume OpenPose detects most of the body parts so we wont worry about this
                 }
             }
 
-            return numOfBodyPartsCorrect / numOfBodyPartsCompared
+            var percentOfCorrectBodyParts = numOfBodyPartsCorrect / numOfBodyPartsCompared
+            return [percentOfCorrectBodyParts, wrongBodyParts]
         }
 
         var tutorialDanceDataRaw = fs.readFileSync(tutorialDanceFileURL, 'utf-8')
@@ -247,42 +256,85 @@ module.exports = {
         // calculate most likely uploaded start frame
         // then for each likely start frame calculate the dance corectness
 
-        function calculateDancePercentForSimilarityArray(similarityArray){
+        function calculateDancePercentForSimilarityArray(frameNum, similarityArray){
             var totalFrames = similarityArray.length
             var totalCount = 0;
             for(var i = 0; i < totalFrames; i++){
                 totalCount += similarityArray[i][1]
             }
-            var percent = totalCount / totalFrames
-            return [percent, similarityArray]
+            if(totalFrames > 0){
+                var percent = totalCount / totalFrames
+                return [percent, frameNum, similarityArray]
+            }else{
+                return [0, frameNum, similarityArray]
+            }
+           
         }
 
         var possibleAnswerArrays = {}
-        var computedPercents = [] // [ [percent, frameData], [percent, [ ["0", 0.6], ["1", 0.5], ... ] ] ]
+        // var computedPercents = [] // [ [percent, frameData], [percent, [ ["0", 0.6], ["1", 0.5], ... ] ] ]
+
+        var currentHighestPercent = -1;
+        var currentFinalAnswerObject = {}
+
+        function createFinalAnswerObjectFromSimilarityData(startFrame, totalDancePercent, similarityData){
+            var finalAnswerObject = {}
+            finalAnswerObject["startFrame"] = startFrame;
+            finalAnswerObject["totalDancePercent"] = totalDancePercent;
+
+
+            /*
+                similarityData = [frameData]
+
+                frameData = [frameNum, frameSimilarityPercent, frameWrongBodyParts]
+                frameWrongBodyParts = [bp1, bp4, bp7, ...]
+
+            */
+           var incorrectPartsObject = {}
+           for(var i = 0; i < similarityData.length; i++){
+                var frameData = similarityData[i]
+                var frameNum = frameData[0]
+                //    var percent = frameData[1]
+                var wrongBodyParts = frameData[2]
+                if(wrongBodyParts.length > 0){
+                    incorrectPartsObject[""+frameNum] = wrongBodyParts
+                }
+           }
+
+           finalAnswerObject["incorrectParts"] = incorrectPartsObject
+           return finalAnswerObject
+        }
 
         if(uploadedDanceFrames != undefined){
             for (var frameNum in uploadedDanceFrames) {
                 if (uploadedDanceFrames.hasOwnProperty(frameNum)) {
                     var uploadedFrame = uploadedDanceFrames[frameNum]
                     // compare frame with start frame
-                    var bodyPartCorrectPercent = compareTwoNormalizedFrames(uploadedFrame, tutorialStartFrameData)
+                    var bodyPartCorrectPercent = compareTwoNormalizedFrames(uploadedFrame, tutorialStartFrameData)[0]
                     if(bodyPartCorrectPercent > FIRST_FRAME_CONSIDERED_THRESHOLD){
-                        // console.log("First Frame "+frameNum)
                         // this is a candidate frame for the first frame
                         var danceSimilarityArrayForStartFrame = calculateDanceSimilarity(frameNum)
                         possibleAnswerArrays[frameNum] = danceSimilarityArrayForStartFrame
-                        computedPercents.push(calculateDancePercentForSimilarityArray(danceSimilarityArrayForStartFrame))
+                        var similarityPercentData = calculateDancePercentForSimilarityArray(frameNum, danceSimilarityArrayForStartFrame)
+                        var dancePercent = similarityPercentData[0]
+                        // console.log("First Frame "+frameNum+"_"+dancePercent+"_"+currentHighestPercent+"_____"+JSON.stringify(currentFinalAnswerObject))
+
+                        if(dancePercent > currentHighestPercent){
+                            currentHighestPercent = dancePercent;
+                            currentFinalAnswerObject = createFinalAnswerObjectFromSimilarityData(frameNum, dancePercent, danceSimilarityArrayForStartFrame)
+                        }
+                        // computedPercents.push(similarityPercentData)
                     }
                 }
             }
         }
 
-        if(computedPercents.length > 0){
-            computedPercents.sort(function(first, second) {
-                return second[0] - first[0];
-            });
-            console.log("BEST PERCENT: "+computedPercents[0][0])
-        }
+        // if(computedPercents.length > 0){
+        //     computedPercents.sort(function(first, second) {
+        //         return second[0] - first[0];
+        //     });
+        //     console.log("BEST PERCENT: "+computedPercents[0][0])
+        // }
         // console.log("DANCE ANSWERS"+JSON.stringify(possibleAnswerArrays))
         // fs.writeFileSync("danceAnswers.json", JSON.stringify(possibleAnswerArrays)) // testing
 
@@ -311,24 +363,23 @@ module.exports = {
                     var tutorialFrame = tutorialDanceFrames[frameNum]
                     if(tutorialFrame != undefined){
                         // compare the two frames
-                        var similarity = compareTwoNormalizedFrames(frameKeypoints, tutorialFrame)
-                        totalComputation.push([frameNum, similarity])
+                        var similarityData = compareTwoNormalizedFrames(frameKeypoints, tutorialFrame)
+                        var similarityPercent = similarityData[0]
+                        var wrongBodyParts = similarityData[1]
+                        totalComputation.push([frameNum, similarityPercent, wrongBodyParts])
                         numberOfFramesCompared += 1
                     }
                 }
             }
-            // Sort the array based on the second element
+            // Sort the array based on the frame num
             totalComputation.sort(function(first, second) {
                 return second[0] - first[0];
             });
             return totalComputation
         }
-        
 
-       // returns an array of floats
-       // TODO length take into account number of uploaded frames processed
-       // min(tutorialVidFrames - startFrame, uploadedVidFrames - uploadedStartFrame)
-       // from [0-1] showing how close the input frame i is close to turorial frame i
+        console.log(JSON.stringify(currentFinalAnswerObject))
+        return currentFinalAnswerObject
     },
     processTutorialVideo: function(tutorialName, danceURL, completion){
         module.exports.processUploadedDance(tutorialName, danceURL, function(normalizedKeyframeLocation){
