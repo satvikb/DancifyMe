@@ -146,6 +146,8 @@ main
   height: 400px;
   transform: translateY(125%);
   overflow: hidden;
+  animation-name: initAnim;
+  animation-duration: 3s;
 }
 
 #carousel div 
@@ -393,4 +395,9 @@ main
   left: 50%;
   transform: translateX(-50%);
   bottom: 10px;
+}
+
+@keyframes initAnim{
+  0%   { top:100vh; }
+  100% { top:0px;}
 }
