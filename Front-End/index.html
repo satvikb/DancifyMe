@@ -8,98 +8,68 @@
     <title>OpenPose</title>
 </head>
 <body>
-      <div class="videoParent">
-        <video id="video" autoplay loop muted>
-            <source src="video.mp4" type="video/mp4" />
-        </video>
-      </div>
-      <p id="word" class="socod">
-          Dancyfy
-      </p>
-    <main>
-
-        <div id="carousel">
-
-           <!-- <div class="hideLeft">
-             <div class="hideLeftContainer">
-               <video class="Dance1" autoplay muted>
-                   <source src="Dance1.mp4" type="video/mp4">
-               </video>
-             </div>
-          </div> -->
-
-          <div class="prevLeftSecond">
-            <div class="prevLeftSecondContainer">
-              <p id="danceName" class="socodg">Renegade</p>
-              <video name="video_file1" class="Dance1" autoplay muted loop>
-                  <source src="Dance1.mp4" type="video/mp4">
-              </video>
-            </div>
-          </div>
-
-          <div class="prev">
-            <div class="prevContainer">
-              <p id="danceName" class="socod">Say So</p>
-              <video name="video_file2" class="Dance1" autoplay muted loop>
-                  <source src="Dance1.mp4" type="video/mp4">
-              </video>
-              <!-- <button class="learnBtn">Learn This</button> -->
-
-            </div>
-          </div>
-
-          <div class="selected">
-            <!-- <img src="https://i1.sndcdn.com/artworks-000062423439-lf7ll2-t500x500.jpg"> -->
-            <div class="selectedContainer">
-              <form action="https://upload.embed.ly/1/video?key=YOUR_API_KEY" method="POST" enctype="multipart/form-data" name="upload_form">
-                <p id="danceName" class="socodb">Cannibal</p>
-                <video name="video_file3" class="Dance1" autoplay muted loop>
-                  <source src="Dance1.mp4" type="video/mp4">
-                </video>
-                <div id="upload-input" hidden style="position: absolute;">
-                  <input id="video_file1" name="video_file" type="file">
-                </div>
-              </form>
-              <!-- <button class="learnBtn">Learn This</button> -->
-            </div>
-
-          </div>
-
-          <div class="next">
-            <div class="nextContainer">
-              <p id="danceName" class="socod">The Box</p>
-              <video name="video_file4" class="Dance1" autoplay muted loop>
-                  <source src="Dance1.mp4" type="video/mp4">
-              </video>
-            </div>
-          </div>
-
-          <div class="nextRightSecond">
-            <div class="nextRightSecondContainer">
-              <p id="danceName" class="socodg">Savage</p>
-              <video name="video_file5" class="Dance1" autoplay muted loop>
-                  <source src="Dance1.mp4" type="video/mp4">
-              </video>
-            </div>
-          </div>
-
-          <!-- <div class="hideRight">
-            <div class="hideRightContainer">
-              <video class="Dance1" autoplay muted loop>
-                  <source src="Dance1.mp4" type="video/mp4">
-              </video>
-            </div>
-          </div> -->
-
+  <div class="videoParent">
+    <video id="video" autoplay loop muted>
+        <source src="video.mp4" type="video/mp4" />
+    </video>
+  </div>
+  <div class="border">
+    <p id="word" class="largelargeWords">
+      Dancyfy
+    </p>
+    <p id="word" class="largeWords">
+      Time To BoogieWoogie!
+    </p>
+  </div>
+  <main>
+    <div id="carousel">
+      <div class="prevLeftSecond">
+        <div class="prevLeftSecondContainer">
+          <p>Renegade</p>
+          <video name="video_file1" class="Dance1" autoplay muted loop>
+              <source src="Dance1.mp4" type="video/mp4">
+          </video>
         </div>
-
-        <!-- <div class="buttons">
-          <button id="prevBtn">Prev</button>
-          <button id="nextBtn">Next</button>
-        </div> -->
-
-      </main>
-
-      <script src="app.js"></script>
+      </div>
+      <div class="prev">
+        <div class="prevContainer">
+          <p>Say So</p>
+          <video name="video_file2" class="Dance1" autoplay muted loop>
+              <source src="Dance1.mp4" type="video/mp4">
+          </video>
+        </div>
+      </div>
+      <div class="selected">
+        <div class="selectedContainer">
+          <form action="http://0df1dc9d19da.ngrok.io/handleDanceComparison" method="POST" enctype="multipart/form-data" name="upload_form">
+            <p>Cannibal</p>
+            <video name="video_file3" class="Dance1" autoplay muted loop>
+              <source src="Dance1.mp4" type="video/mp4">
+            </video>
+            <div id="upload-input" hidden style="position: absolute;">
+              <input id="video_file1" name="videofile" type="file">
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="next">
+        <div class="nextContainer">
+          <p>The Box</p>
+          <video name="video_file4" class="Dance1" autoplay muted loop>
+              <source src="Dance1.mp4" type="video/mp4">
+          </video>
+        </div>
+      </div>
+      <div class="nextRightSecond">
+        <div class="nextRightSecondContainer">
+          <p>Savage</p>
+          <video name="video_file5" class="Dance1" autoplay muted loop>
+              <source src="Dance1.mp4" type="video/mp4">
+          </video>
+        </div>
+      </div>
+    </div>
+  </main>
+  <script src="app.js"></script>
 </body>
 </html>

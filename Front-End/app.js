@@ -53,10 +53,6 @@ $(document).keydown(function (e) {
   e.preventDefault();
 });
 
-// $("#carousel div").click(function () {
-//   moveToSelected($(this));
-// });
-
 $("#prevBtn").click(function () {
   console.log("PC")
   moveToSelected("prev");
@@ -65,26 +61,24 @@ $("#prevBtn").click(function () {
 $("#nextBtn").click(function () {
   moveToSelected("next");
 });
-console.log("sc")
-
 var all = document.getElementsByTagName("video");
 for(var i = 0, max = all.length; i < max; i++)
 {
   var videoNode = all[i]
-  if (videoNode) {
+  console.log(videoNode);
+  if (videoNode && i != 0) {
     var videoName = videoNode.getAttribute("name");
     console.log("Video Clicked" + videoName);
     videoNode.addEventListener('click', function(event){
       event.preventDefault();
+      var videoName = event.target.getAttribute("name");
       $('#' + videoName).click();
       console.log("Video Clicked" + videoName);
     });
   }
 }
 
-// TODO determine which dance to learn or hide all the learn buttons except
-// for the currently selected video
-// $(".learnBtn").click(function () {
-//   // show a new window
-  
-// });
+$("#video_file1").change(function(e) {
+  $("form[name='upload_form']").submit();
+  e.preventDefault();
+})
