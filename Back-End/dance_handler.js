@@ -16,10 +16,17 @@ module.exports = {
             processedDances/
                 danceID/
                     danceID.dce
+    */
+   /* maybe dont separate tutorial dances from raw
+            rawTutorialDances/
+                danceID/
+                    danceName.mp4
+                    keyframe1.json,...
+                    keyframeCompilation.json
             tutorialDances/
                 danceName/
                     danceName.dce
-    */
+   */
 
     // rawDanceUploads/12345.mp4
     // C:\Users\Satvik\Documents\Development\Hackathons\SwampHacks 2021\DancifyMe\Back-End\rawDanceUploads
@@ -41,10 +48,16 @@ module.exports = {
             console.log(`stderr: ${stderr}`);
             console.log("DONE WITH OPEN POSE")
 
-            // processOpenPoseKeyframes
-            // normalizeKeyframeData
+            
 
-            completion(finalData)
+            var combinedKeyframeDataLocation = resolve(jsonWriteLocation+"/keyframeCompilation.json")
+            var normalizedKeyframeLocation = module.exports.getNormalizedDanceDataURL(danceID)
+            // processOpenPoseKeyframes
+            module.exports.processOpenPoseKeyframes(jsonWriteLocation, combinedKeyframeDataLocation)
+            // normalizeKeyframeData
+            module.exports.normalizeKeyframeData(combinedKeyframeDataLocation, normalizedKeyframeLocation)
+            
+            completion(normalizedKeyframeLocation)
         });
     },
     processOpenPoseKeyframes: function(keyframesFolder, danceFileOutputURL){
@@ -222,6 +235,10 @@ module.exports = {
         var uploadedDanceFrames = uploadedDanceData["frames"]
         
         // calculate most likely uploaded start frame
+        // then for each likely start frame calculate the dance corectness
+
+        var possibleAnswerArrays = {}
+
         if(uploadedDanceFrames != undefined){
             for (var frameNum in uploadedDanceFrames) {
                 if (uploadedDanceFrames.hasOwnProperty(frameNum)) {
@@ -230,28 +247,49 @@ module.exports = {
                     var bodyPartCorrectPercent = compareTwoNormalizedFrames(uploadedFrame, tutorialStartFrameData)
                     if(bodyPartCorrectPercent > FIRST_FRAME_CONSIDERED_THRESHOLD){
                         // this is a candidate frame for the first frame
-                        // calculateDanceSimilarity()
+                        calculateDanceSimilarity(frameNum)
                     }
                 }
             }
         }
 
         function calculateDanceSimilarity(uploadedFirstFrame){
+            // create sort for dance
+            // Create items array
+            var danceFramesArray = Object.keys(uploadedDanceFrames).map(function(key) {
+                return [key, uploadedDanceFrames[key]];
+            });
+            
+            // Sort the array based on the second element
+            items.sort(function(first, second) {
+                return second[0] - first[0];
+            });
+  
             // calculate the confidence of each frame
             var numberOfFramesCompared = 0;
-            if(uploadedDanceFrames != undefined){
-                for (var frameNum in uploadedDanceFrames) {
-                    if (uploadedDanceFrames.hasOwnProperty(frameNum)) {
-                        var tutorialFrame = tutorialDanceFrames[frameNum]
-                        var uploadedFrame = uploadedDanceFrames[frameNum]
+            var totalComputation = []
+            for(var i = 0; i < items.length; i++){
+                var frameData = items[i]
+                var frameNum = frameData[0]
+                var frameKeypoints = frameData[1]
 
-                        if(tutorialFrame != undefined){
-                            // compare the two frames
-                            // compareTwoNormalizedFrames()
-                            numberOfFramesCompared += 1
-                        }
+                if(frameNum > uploadedFirstFrame){
+                    // valid frame to test
+                    var tutorialFrame = tutorialDanceFrames[frameNum]
+                    if(tutorialFrame != undefined){
+                        // compare the two frames
+                        var similarity = compareTwoNormalizedFrames(frameKeypoints, tutorialFrame)
+                        totalComputation.push([frameNum, similarity])
+                        numberOfFramesCompared += 1
                     }
                 }
+            }
+            // TODO calculate the best totalComputation value
+            if(totalComputation.length > 0){
+                return totalComputation[0][1]
+            }else{
+                console.log("No dance similarity")
+                return 0;
             }
         }
         
@@ -260,5 +298,18 @@ module.exports = {
        // TODO length take into account number of uploaded frames processed
        // min(tutorialVidFrames - startFrame, uploadedVidFrames - uploadedStartFrame)
        // from [0-1] showing how close the input frame i is close to turorial frame i
+    },
+    processTutorialVideo: function(tutorialName, danceURL, completion){
+        module.exports.processUploadedDance(tutorialName, danceURL, function(normalizedKeyframeLocation){
+            completion(normalizedKeyframeLocation)
+        })
+    },
+    getNormalizedDanceDataURL:function(danceID){
+        var processedDancesDir = resolve('processedDances/'+danceID);
+
+        if (!fs.existsSync(processedDancesDir)){
+            fs.mkdirSync(processedDancesDir);
+        }
+        return resolve(processedDancesDir+"/"+danceID+".json");
     }
 }
